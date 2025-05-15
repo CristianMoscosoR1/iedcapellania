@@ -1,3 +1,4 @@
+<x-guest-layout>
 <style>
     body {
         background: linear-gradient(135deg, #b3c6ff 0%, #e6f0ff 100%);
@@ -95,6 +96,7 @@
             {{ __('Registrarse') }}
         </button>
     </form>
+    <p><strong>Importante:</strong> Por favor, asegúrese de guardar sus credenciales de acceso de manera segura. No habrá opción para recuperar su contraseña si la olvida.</p>
 </div>
 </x-guest-layout>
 <p><strong>Importante:</strong> Por favor, asegúrese de guardar sus credenciales de acceso de manera segura. No habrá opción para recuperar su contraseña si la olvida.</p>

@@ -27,17 +27,17 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'     => 'required|string|max:255',
-            'email'    => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-            'role_id'  => 'required|exists:roles,id',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|confirmed',
+            'role_id' => 'nullable|exists:roles,id', // Validación para role_id
         ]);
 
-        // Crear el usuario
         $user = User::create([
-            'name'     => $request->name,
-            'email'    => $request->email,
+            'name' => $request->name,
+            'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role_id' => $request->role_id, // Asignación de role_id
         ]);
 
         // Asignar el rol al usuario

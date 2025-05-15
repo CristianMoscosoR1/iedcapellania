@@ -69,4 +69,10 @@ Route::middleware(['auth', 'role:profesor'])->group(function () {
     Route::put('/comments/{comment}/approve', [CommentController::class, 'approve'])->name('comments.approve');
     Route::put('/comments/{comment}/hide', [CommentController::class, 'hide'])->name('comments.hide');
 });
-Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
+
+// Ruta para guardar comentarios (solo usuarios autenticados)
+Route::middleware('auth')->group(function () {
+    Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
+    Route::put('/comments/{comment}/approve', [CommentController::class, 'approve'])->name('comments.approve')->middleware('role:profesor');
+    Route::put('/comments/{comment}/hide', [CommentController::class, 'hide'])->name('comments.hide')->middleware('role:profesor');
+});
