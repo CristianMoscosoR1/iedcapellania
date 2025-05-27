@@ -11,10 +11,11 @@
             align-items: center;
             justify-content: center;
         }
+
         .login-box {
             background: #fff;
             border-radius: 16px;
-            box-shadow: 0 4px 24px rgba(21,101,192,0.13);
+            box-shadow: 0 4px 24px rgba(21, 101, 192, 0.13);
             padding: 32px 28px;
             max-width: 350px;
             width: 100%;
@@ -23,47 +24,64 @@
             flex-direction: column;
             gap: 18px;
         }
+
+        .login-box form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 320px;
+            width: 100%;
+            margin: auto;
+        }
+
         .login-box h2 {
             color: #1976d2;
             text-align: center;
             margin-bottom: 18px;
         }
+
         .login-box input[type="email"],
         .login-box input[type="password"] {
             width: 100%;
-            padding: 10px 12px;
+            padding: 10px;
             border: 1px solid #b3c6ff;
             border-radius: 6px;
-            margin-bottom: 12px;
             font-size: 1rem;
         }
+
         .login-box button {
+            width: 90%;
             background: #1976d2;
             color: #fff;
             border: none;
             border-radius: 6px;
-            padding: 10px 0;
+            padding: 12px;
             font-size: 1rem;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: background 0.3s;
         }
+
         .login-box button:hover {
             background: #1565c0;
         }
+
         .login-box label {
             color: #1976d2;
             font-size: 0.95rem;
         }
+
         .login-box .form-check {
             display: flex;
             align-items: center;
             gap: 6px;
             margin-bottom: 10px;
         }
+
         .login-box .links {
             text-align: center;
             margin-top: 10px;
         }
+
         .login-box .links a {
             color: #1976d2;
             text-decoration: none;

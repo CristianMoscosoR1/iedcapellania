@@ -2,10 +2,11 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController; // Asegúrate de importar tu controlador
-use App\Http\Controllers\ProgramController; // Asegúrate de importar el controlador de programas
+//use App\Http\Controllers\ProgramController; // Asegúrate de importar el controlador de programas
 use App\Http\Controllers\CommentController; // Asegúrate de importar el controlador
 use Illuminate\Support\Facades\Route;
 use App\Models\Comment; // Add this if you have a Comment model
+use App\Http\Middleware\VerifyCsrfToken;
 
 Route::get('/', function () {
     return view('layouts.home');  
@@ -16,11 +17,12 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+ Route::post('/users', [UserController::class, 'store'])->name('users.store'); // Resistro de usuarios
+
 // Rutas de usuarios (con autenticación)
 Route::middleware('auth')->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('users.index'); // Mostrar usuarios
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create'); // Crear nuevo usuario
-    Route::post('/users', [UserController::class, 'store'])->name('users.store'); // Guardar nuevo usuario
     Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit'); // Editar usuario
     Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update'); // Actualizar usuario
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy'); // Eliminar usuario
@@ -41,11 +43,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 // Rutas protegidas por el rol 'editor' o 'admin'
-Route::middleware(['auth', 'role:editor|admin'])->group(function () {
+//Route::middleware(['auth', 'role:editor|admin'])->group(function () {
     // Ruta para editar programas (solo accesible para editores o admin)
-    Route::get('/programas/editar', [ProgramController::class, 'edit'])->name('programas.edit');
+    //Route::get('/programas/editar', [ProgramController::class, 'edit'])->name('programas.edit');
     // Otras rutas para editor o admin pueden ir aquí...
-});
+//});
 
 // Rutas protegidas por el permiso 'gestionar usuarios'
 Route::middleware(['auth', 'can:gestionar usuarios'])->group(function () {

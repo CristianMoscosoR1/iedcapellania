@@ -70,17 +70,24 @@
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="navbar-menu">
-            <a href="{{ route('radio') }}" title="Radio"><i class="fas fa-radio"></i></a>
-            @if (Route::has('login'))
-                @auth
-                    <a href="{{ url('/logout') }}" title="Salir"><i class="fas fa-sign-out-alt"></i></a>
-                @else
-                    <a href="{{ route('login') }}" title="Iniciar sesión"><i class="fas fa-sign-in-alt"></i></a>
-                    <a href="{{ route('register') }}" title="Registrarse"><i class="fas fa-user-plus"></i></a>
-                @endauth
-            @endif
+    <nav style="background: #1565c0; width: 100vw; min-height: 70px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(21,101,192,0.08);">
+        <div style="display: flex; flex-direction: row; gap: 40px;">
+            <a href="{{ url('/') }}" style="color: #fff; text-decoration: none; font-size: 2rem; display: flex; align-items: center; gap: 8px; transition: color 0.2s;">
+                <i class="fas fa-home"></i>
+                <span>Inicio</span>
+            </a>
+            <a href="{{ route('radio') }}" style="color: #fff; text-decoration: none; font-size: 2rem; display: flex; align-items: center; gap: 8px; transition: color 0.2s;">
+                <i class="fas fa-broadcast-tower"></i>
+                <span>Radio</span>
+            </a>
+            <a href="{{ route('register') }}" style="color: #fff; text-decoration: none; font-size: 2rem; display: flex; align-items: center; gap: 8px; transition: color 0.2s;">
+                <i class="fas fa-user-plus"></i>
+                <span>Registrarse</span>
+            </a>
+            <a href="{{ route('login') }}" style="color: #fff; text-decoration: none; font-size: 2rem; display: flex; align-items: center; gap: 8px; transition: color 0.2s;">
+                <i class="fas fa-sign-in-alt"></i>
+                <span>Iniciar sesión</span>
+            </a>
         </div>
     </nav>
     <div class="container">
@@ -88,3 +95,4 @@
     </div>
 </body>
 </html>
+<!-- resources/views/layouts/app.blade.php -->
