@@ -6,9 +6,33 @@ use App\Models\User;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
+    // Guardar un nuevo usuario (solo accesible para admin)
+    public function store(Request $request)
+    {   
+        $request->validate([
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+            //'role_id'  => 'required|exists:roles,id',
+        ]);
+
+        // Crear el usuario
+        $user = User::create([
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+        
+        // Asignar el rol al usuario
+        //$user->assignRole(Role::find($request->role_id)->name);
+        
+        return redirect()->route('users.index')->with('success', 'Usuario creado correctamente.');
+    }
+
     // Mostrar todos los usuarios (solo accesible para admin)
     public function index()
     {
@@ -21,29 +45,6 @@ class UserController extends Controller
     {
         $roles = Role::all(); // Obtener todos los roles disponibles
         return view('users.create', compact('roles'));
-    }
-
-    // Guardar un nuevo usuario (solo accesible para admin)
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name'     => 'required|string|max:255',
-            'email'    => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-            'role_id'  => 'required|exists:roles,id',
-        ]);
-
-        // Crear el usuario
-        $user = User::create([
-            'name'     => $request->name,
-            'email'    => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        // Asignar el rol al usuario
-        $user->assignRole(Role::find($request->role_id)->name);
-
-        return redirect()->route('users.index')->with('success', 'Usuario creado correctamente.');
     }
 
     // Mostrar un solo usuario (solo accesible para admin)

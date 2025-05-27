@@ -43,63 +43,58 @@
         color: #fff;
     }
 </style>
-<div class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-blue-900 via-blue-700 to-blue-400 text-white p-4">
+<div class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-blue-900 via-blue-700 to-blue-400 text-white p-6">
     <!-- Encabezado de la radio -->
-    <div class="flex flex-col items-center mb-6">
-        <div class="flex items-center gap-3">
+    <div class="flex flex-col items-center mb-10">
+        <div class="flex items-center gap-4">
             <i class="fas fa-broadcast-tower text-5xl text-white drop-shadow-lg"></i>
             <h1 class="text-3xl md:text-5xl font-bold tracking-wide drop-shadow-lg">Radio Colegio IED Capellanía</h1>
         </div>
-        <p class="mt-2 text-lg md:text-xl text-blue-100 font-light">¡Sintoniza la voz de nuestra comunidad educativa!</p>
+        <p class="mt-3 text-lg md:text-xl text-blue-100 font-light">¡Sintoniza la voz de nuestra comunidad educativa!</p>
     </div>
-
-    <!-- GIF de la radio o imagen -->
-    <div class="mb-6">
-        <img src="{{ asset('ruta/a/tu/imagen.gif') }}" alt="Radio GIF" class="rounded-lg shadow-lg max-h-60 border-4 border-white/30">
+    <!-- GIF y botones de autenticación -->
+    <div class="mb-12 flex flex-row items-start justify-center gap-16 w-full max-w-2xl bg-white/20 rounded-xl shadow-2xl p-10 backdrop-blur-md">
+        <img src="{{ asset('images/radio.gif') }}" alt="Radio GIF" class="rounded-lg shadow-lg max-h-60 border-4 border-white/30">
+        <div class="flex flex-col gap-6 ml-6">
+            <a href="{{ route('login') }}" class="auth-btn">Iniciar sesión</a>
+            <a href="{{ route('register') }}" class="auth-btn">Registrarse</a>
+        </div>
     </div>
-
     <!-- Botón para escuchar radio -->
-    <a href="#radio-player" class="radio-btn mb-8">Escuchar Radio</a>
-
-    <!-- Botones de autenticación -->
-    <div class="auth-btns">
-        <a href="{{ route('login') }}" class="auth-btn">Iniciar sesión</a>
-        <a href="{{ route('register') }}" class="auth-btn">Registrarse</a>
-    </div>
-
+    <a href="#radio-player" class="radio-btn mb-12">Escuchar Radio</a>
     <!-- Reproductor -->
-    <div class="w-full max-w-xl bg-white/20 rounded-lg p-4 shadow-lg backdrop-blur-md mt-8">
-        <audio id="radio-player" controls class="w-full">
+    <div class="w-full max-w-xl bg-white/20 rounded-xl p-8 shadow-2xl backdrop-blur-md mt-10">
+        <audio id="radio-player" class="w-full">
             <source src="http://localhost:8000/stream" type="audio/mp3">
             Tu navegador no soporta el elemento de audio.
         </audio>
         <!-- Controles -->
-        <div class="flex items-center justify-between mt-4 w-full gap-4">
-            <button id="play-pause-btn" class="bg-blue-700 hover:bg-blue-900 p-3 rounded-full text-white shadow transition">
+        <div class="flex items-center justify-between mt-8 w-full gap-8">
+            <button id="play-pause-btn" class="bg-blue-700 hover:bg-blue-900 p-4 rounded-full text-white shadow transition">
                 <i class="fas fa-play"></i>
             </button>
             <input type="range" id="volume" class="w-1/2 accent-blue-600" min="0" max="1" step="0.01" value="1">
-            <button id="mute-btn" class="bg-gray-600 hover:bg-gray-800 p-3 rounded-full text-white shadow transition">
+            <button id="mute-btn" class="bg-gray-600 hover:bg-gray-800 p-4 rounded-full text-white shadow transition">
                 <i class="fas fa-volume-mute"></i>
             </button>
         </div>
         <!-- Sección de comentarios -->
-        <div class="w-full max-w-xl mt-10 bg-white/20 rounded-lg p-4 shadow-lg backdrop-blur-md">
-            <h2 class="text-2xl font-semibold text-white mb-4">Comentarios</h2>
+        <div class="w-full max-w-xl mt-12 bg-white/20 rounded-lg p-6 shadow-lg backdrop-blur-md">
+            <h2 class="text-2xl font-semibold text-white mb-6">Comentarios</h2>
             <!-- Formulario para nuevo comentario -->
-            <form method="POST" action="{{ route('comments.store') }}" class="mb-6">
+            <form method="POST" action="{{ route('comments.store') }}" class="mb-8">
                 @csrf
-                <textarea name="comment" rows="3" class="w-full rounded p-2 text-gray-800" placeholder="Escribe tu comentario..." required></textarea>
-                <button type="submit" class="mt-2 bg-blue-700 hover:bg-blue-900 text-white px-4 py-2 rounded transition">Enviar</button>
+                <textarea name="comment" rows="3" class="w-full rounded p-3 text-gray-800" placeholder="Escribe tu comentario..." required></textarea>
+                <button type="submit" class="mt-3 bg-blue-700 hover:bg-blue-900 text-white px-6 py-2 rounded transition">Enviar</button>
             </form>
             <!-- Lista de comentarios -->
-            <div class="space-y-4">
+            <div class="space-y-6">
                 @foreach($comments as $comment)
-                    <div class="bg-white/80 rounded p-3 text-gray-900 shadow flex flex-col">
+                    <div class="bg-white/80 rounded p-4 text-gray-900 shadow flex flex-col">
                         <span class="font-bold text-blue-700">{{ $comment->user->name ?? 'Anónimo' }}</span>
                         <span class="text-sm text-gray-600">{{ $comment->created_at->diffForHumans() }}</span>
                         <p class="mt-2">{{ $comment->content }}</p>
-                        <div class="flex gap-3 mt-2">
+                        <div class="flex gap-4 mt-2">
                             <button class="text-blue-600 hover:underline text-sm">Responder</button>
                             <button class="text-green-600 hover:underline text-sm">👍 Like</button>
                             <button class="text-red-600 hover:underline text-sm">Reportar</button>

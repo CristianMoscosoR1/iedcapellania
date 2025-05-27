@@ -64,37 +64,36 @@
         font-size: 0.95rem;
     }
 </style>
-<div class="register-box">
-    <h2>Registro</h2>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+<x-guest-layout>
+    <div class="register-box">
+        <h2>Registro</h2>
+        <form method="POST" action="{{ route('users.store') }}">
+            @csrf
 
-        <label for="name">{{ __('Nombre') }}</label>
-        <input id="name" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-        <x-input-error :messages="$errors->get('name')" class="mt-2" />
+            <label for="name">Nombre</label>
+            <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus autocomplete="name" />
+            <x-input-error :messages="$errors->get('name')" class="mt-2" />
 
-        <label for="email">{{ __('Correo electrónico') }}</label>
-        <input id="email" type="email" name="email" :value="old('email')" required autocomplete="username" />
-        <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            <label for="email">Correo electrónico</label>
+            <input id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="username" />
+            <x-input-error :messages="$errors->get('email')" class="mt-2" />
 
-        <label for="password">{{ __('Contraseña') }}</label>
-        <input id="password" type="password" name="password" required autocomplete="new-password" />
-        <x-input-error :messages="$errors->get('password')" class="mt-2" />
+            <label for="password">Contraseña</label>
+            <input id="password" type="password" name="password" required autocomplete="new-password" />
+            <x-input-error :messages="$errors->get('password')" class="mt-2" />
 
-        <label for="password_confirmation">{{ __('Confirmar contraseña') }}</label>
-        <input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password" />
-        <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+            <label for="password_confirmation">Confirmar contraseña</label>
+            <input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password" />
+            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
 
-        <div class="links">
-            <a href="{{ route('login') }}">
-                {{ __('¿Ya tienes cuenta? Inicia sesión') }}
-            </a>
-        </div>
+            <div class="links">
+                <a href="{{ route('login') }}">¿Ya tienes cuenta? Inicia sesión</a>
+            </div>
 
-        <button type="submit" class="ms-4">
-            {{ __('Registrarse') }}
-        </button>
-    </form>
-</div>
+            <button type="submit">
+                Registrarse
+            </button>
+        </form>
+    </div>
+    <p><strong>Importante:</strong> Por favor, asegúrese de guardar sus credenciales de acceso de manera segura. No habrá opción para recuperar su contraseña si la olvida.</p>
 </x-guest-layout>
-<p><strong>Importante:</strong> Por favor, asegúrese de guardar sus credenciales de acceso de manera segura. No habrá opción para recuperar su contraseña si la olvida.</p>
