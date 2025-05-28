@@ -17,7 +17,7 @@ class UserController extends Controller
             'name'     => 'required|string|max:255',
             'email'    => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
-            //'role_id'  => 'required|exists:roles,id',
+            'rol_id'  => 'required|exists:roles,id',
         ]);
 
         // Crear el usuario
@@ -25,10 +25,11 @@ class UserController extends Controller
             'name'     => $request->name,
             'email'    => $request->email,
             'password' => Hash::make($request->password),
+            'rol_id'  => $request->rol_id,
         ]);
         
         // Asignar el rol al usuario
-        //$user->assignRole(Role::find($request->role_id)->name);
+        //$user->assignRole(Role::find($request->rol_id)->name);
         
         return redirect()->route('users.index')->with('success', 'Usuario creado correctamente.');
     }
@@ -44,7 +45,7 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::all(); // Obtener todos los roles disponibles
-        return view('users.create', compact('roles'));
+        return view('auth.register', compact('roles'));
     }
 
     // Mostrar un solo usuario (solo accesible para admin)
@@ -66,7 +67,7 @@ class UserController extends Controller
         $request->validate([
             'name'     => 'required|string|max:255',
             'email'    => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'role_id'  => 'required|exists:roles,id',
+            'rol_id'  => 'required|exists:roles,id',
         ]);
 
         // Actualizar el usuario
@@ -76,7 +77,7 @@ class UserController extends Controller
         ]);
 
         // Asignar el nuevo rol al usuario
-        $user->syncRoles([$request->role_id]);
+        $user->syncRoles([$request->rol_id]);
 
         return redirect()->route('users.index')->with('success', 'Usuario actualizado correctamente.');
     }

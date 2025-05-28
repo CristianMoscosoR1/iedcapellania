@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController; // Asegúrate de importar tu controlador
 //use App\Http\Controllers\ProgramController; // Asegúrate de importar el controlador de programas
 use App\Http\Controllers\CommentController; // Asegúrate de importar el controlador
+use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Comment; // Add this if you have a Comment model
 use App\Http\Middleware\VerifyCsrfToken;
@@ -28,6 +29,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy'); // Eliminar usuario
 });
 
+// Rutas de registro de usuario
+Route::middleware('guest')->group(function () {
+    Route::get('/register', [UserController::class, 'create'])->name('register'); 
+    Route::post('/register', [UserController::class, 'store'])->name('register.store'); 
+});
+
 // Rutas para editar perfil del usuario autenticado
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -41,13 +48,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/usuarios', [UserController::class, 'index'])->name('admin.usuarios');
     // Otras rutas para admin pueden ir aquí...
 });
-
-// Rutas protegidas por el rol 'editor' o 'admin'
-//Route::middleware(['auth', 'role:editor|admin'])->group(function () {
-    // Ruta para editar programas (solo accesible para editores o admin)
-    //Route::get('/programas/editar', [ProgramController::class, 'edit'])->name('programas.edit');
-    // Otras rutas para editor o admin pueden ir aquí...
-//});
 
 // Rutas protegidas por el permiso 'gestionar usuarios'
 Route::middleware(['auth', 'can:gestionar usuarios'])->group(function () {
@@ -67,7 +67,7 @@ Route::get('/radio', function () {
 require __DIR__.'/auth.php';
 
 // Ruta para guardar comentarios
-Route::middleware(['auth', 'role:profesor'])->group(function () {
+Route::middleware(['auth', 'role:docente'])->group(function () {
     Route::put('/comments/{comment}/approve', [CommentController::class, 'approve'])->name('comments.approve');
     Route::put('/comments/{comment}/hide', [CommentController::class, 'hide'])->name('comments.hide');
 });

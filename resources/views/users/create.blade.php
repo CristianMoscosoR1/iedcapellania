@@ -15,8 +15,8 @@
         <label for="password">Contraseña:</label><br>
         <input type="password" name="password" id="password" required><br><br>
 
-        <label for="role_id">Rol:</label><br>
-        <select name="role_id" id="role_id">
+        <label for="rol_id">Rol:</label><br>
+        <select name="rol_id" id="rol_id">
             @foreach ($roles as $role)
                 <option value="{{ $role->id }}">{{ $role->role_name }}</option>
             @endforeach
